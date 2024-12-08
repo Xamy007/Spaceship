@@ -3,7 +3,6 @@ import random
 from pathlib import Path
 
 ROOT_DIR = str(Path(__file__).parent)
-# Constants
 WIDTH, HEIGHT = 800, 600
 FPS = 20
 WHITE = (255, 255, 255)
@@ -12,19 +11,18 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
-# Initialize Pygame
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Shooter")
 clock = pygame.time.Clock()
 
-# Load assets
-SPACESHIP_IMG = pygame.image.load(ROOT_DIR+"\\spaceship.png")  # Replace with your spaceship image
+
+SPACESHIP_IMG = pygame.image.load(ROOT_DIR+"\\spaceship.png")  
 SPACESHIP_IMG = pygame.transform.scale(SPACESHIP_IMG, (50, 50))
-ENEMY_IMG = pygame.image.load(ROOT_DIR+"\\enemy.png")  # Replace with your enemy image
+ENEMY_IMG = pygame.image.load(ROOT_DIR+"\\enemy.png")  
 ENEMY_IMG = pygame.transform.scale(ENEMY_IMG, (50, 50))
 
-# Spaceship class
+
 class Spaceship:
     def __init__(self):
         self.image = SPACESHIP_IMG
@@ -57,7 +55,7 @@ class Spaceship:
             if bullet.rect.bottom < 0:
                 self.bullets.remove(bullet)
 
-# Bullet class
+
 class Bullet:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x - 5, y, 10, 20)
@@ -69,7 +67,6 @@ class Bullet:
     def draw(self, surface):
         pygame.draw.rect(surface, RED, self.rect)
 
-# Enemy class
 class Enemy:
     def __init__(self):
         self.image = ENEMY_IMG
@@ -84,7 +81,6 @@ class Enemy:
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-# Main function
 def main():
     running = True
     spaceship = Spaceship()
@@ -96,15 +92,14 @@ def main():
     while running:
         screen.fill(WHITE)
         keys = pygame.key.get_pressed()
-
-        # Event handling
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 spaceship.shoot()
 
-        # Update game objects
+        
         spaceship.move(keys)
         spaceship.update_bullets()
 
@@ -123,12 +118,12 @@ def main():
                     enemies.append(Enemy())
                     score += 1
 
-        # Draw game objects
+        
         spaceship.draw(screen)
         for enemy in enemies:
             enemy.draw(screen)
 
-        # Display score
+        
         score_text = font.render(f"Score: {score}", True, WHITE)
         screen.blit(score_text, (10, 10))
 
